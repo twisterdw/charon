@@ -696,12 +696,12 @@ func newETH2Client(ctx context.Context, conf Config, life *lifecycle.Manager,
 		opts := []beaconmock.Option{
 			beaconmock.WithSlotDuration(time.Second),
 			beaconmock.WithDeterministicAttesterDuties(dutyFactor),
-			beaconmock.WithDeterministicSyncCommDuties(2, 8), // First 2 epochs of every 8
+			//beaconmock.WithDeterministicSyncCommDuties(2, 8), // First 2 epochs of every 8
 			beaconmock.WithValidatorSet(createMockValidators(pubkeys)),
 		}
-		if !conf.SyntheticBlockProposals { // Only add deterministic proposals if synthetic duties are disabled.
-			opts = append(opts, beaconmock.WithDeterministicProposerDuties(dutyFactor))
-		}
+		//if !conf.SyntheticBlockProposals { // Only add deterministic proposals if synthetic duties are disabled.
+		//	opts = append(opts, beaconmock.WithDeterministicProposerDuties(dutyFactor))
+		//}
 		opts = append(opts, conf.TestConfig.SimnetBMockOpts...)
 		bmock, err := beaconmock.New(opts...)
 		if err != nil {
@@ -713,10 +713,10 @@ func newETH2Client(ctx context.Context, conf Config, life *lifecycle.Manager,
 			return nil, err
 		}
 
-		if conf.SyntheticBlockProposals {
-			log.Info(ctx, "Synthetic block proposals enabled")
-			wrap = eth2wrap.WithSyntheticDuties(wrap, pubkeys)
-		}
+		//if conf.SyntheticBlockProposals {
+		//	log.Info(ctx, "Synthetic block proposals enabled")
+		//	wrap = eth2wrap.WithSyntheticDuties(wrap, pubkeys)
+		//}
 
 		life.RegisterStop(lifecycle.StopBeaconMock, lifecycle.HookFuncErr(bmock.Close))
 

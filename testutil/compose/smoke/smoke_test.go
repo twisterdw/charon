@@ -35,9 +35,9 @@ import (
 //go:generate go test . -run=TestSmoke -integration -v
 
 var (
-	integration = flag.Bool("integration", false, "Enable docker based integration test")
+	integration = flag.Bool("integration", true, "Enable docker based integration test")
 	sudoPerms   = flag.Bool("sudo-perms", false, "Enables changing all compose artefacts file permissions using sudo.")
-	logDir      = flag.String("log-dir", "", "Specifies the directory to store test docker-compose logs. Empty defaults to stdout.")
+	logDir      = flag.String("log-dir", ".", "Specifies the directory to store test docker-compose logs. Empty defaults to stdout.")
 )
 
 func TestSmoke(t *testing.T) {
@@ -88,11 +88,12 @@ func TestSmoke(t *testing.T) {
 			ConfigFunc: func(conf *compose.Config) {
 				conf.NumNodes = 10
 				conf.Threshold = 7
-				conf.NumValidators = 15
+				conf.NumValidators = 150
 				conf.InsecureKeys = true
 				conf.KeyGen = compose.KeyGenCreate
+				conf.VCs = []compose.VCType{compose.VCMock}
 			},
-			Timeout: time.Second * 120,
+			Timeout: time.Second * 240,
 		},
 		{
 			Name:     "run_version_matrix_with_dkg",
@@ -145,6 +146,7 @@ func TestSmoke(t *testing.T) {
 			conf := compose.NewDefaultConfig()
 			conf.DisableMonitoringPorts = true
 			conf.BuildLocal = true
+			conf.ImageTag = "local"
 			if test.ConfigFunc != nil {
 				test.ConfigFunc(&conf)
 			}
