@@ -25,6 +25,7 @@ package main
 
 import (
 	"context"
+	"github.com/obolnetwork/charon/cluster"
 	"os/signal"
 	"syscall"
 
@@ -134,6 +135,7 @@ func newNewCmd() *cobra.Command {
 	featureSet := cmd.Flags().String("feature-set", conf.FeatureSet, "Minimum feature set to enable: alpha, beta, stable")
 	numVals := cmd.Flags().Int("num-validators", conf.NumValidators, "Number of distributed validators.")
 	vcTypes := cmd.Flags().StringSlice("validator-types", conf.VCStrings(), "Validator types to include.")
+	nodes := cmd.Flags().Int("nodes", conf.NumNodes, "Number of charon nodes in the cluster.")
 
 	cmd.RunE = func(cmd *cobra.Command, _ []string) error {
 		conf.KeyGen = compose.KeyGen(*keygen)
@@ -143,6 +145,8 @@ func newNewCmd() *cobra.Command {
 		conf.FeatureSet = *featureSet
 		conf.ExternalRelay = *extRelay
 		conf.NumValidators = *numVals
+		conf.NumNodes = *nodes
+		conf.Threshold = cluster.Threshold(conf.NumNodes)
 
 		if conf.BuildLocal {
 			conf.ImageTag = "local"
