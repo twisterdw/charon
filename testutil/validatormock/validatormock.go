@@ -305,23 +305,8 @@ func Register(ctx context.Context, eth2Cl eth2wrap.Client, signFunc SignFunc,
 }
 
 // NewSigner returns a signing function supporting the provided private keys.
-func NewSigner(secrets ...*bls_sig.SecretKey) SignFunc {
-	return func(pubkey eth2p0.BLSPubKey, msg []byte) (eth2p0.BLSSignature, error) {
-		secret, err := getSecret(secrets, pubkey)
-		if err != nil {
-			return eth2p0.BLSSignature{}, err
-		}
-
-		sig, err := tbls.Sign(secret, msg)
-		if err != nil {
-			return eth2p0.BLSSignature{}, err
-		}
-
-		return tblsconv.SigToETH2(sig), nil
-	}
-}
-
-func getSecret(secrets []*bls_sig.SecretKey, pubkey eth2p0.BLSPubKey) (*bls_sig.SecretKey, error) {
+func NewSigner(secrets ...*bls_sig.SecretKey) (SignFunc, error) {
+	secretByPubkey := make(map[eth2p0.BLSPubKey]*bls_sig.SecretKey)
 	for _, secret := range secrets {
 		pk, err := secret.GetPublicKey()
 		if err != nil {
@@ -333,12 +318,22 @@ func getSecret(secrets []*bls_sig.SecretKey, pubkey eth2p0.BLSPubKey) (*bls_sig.
 			return nil, err
 		}
 
-		if eth2Pubkey == pubkey {
-			return secret, nil
-		}
+		secretByPubkey[eth2Pubkey] = secret
 	}
 
-	return nil, errors.New("private key not found")
+	return func(pubkey eth2p0.BLSPubKey, msg []byte) (eth2p0.BLSSignature, error) {
+		secret, ok := secretByPubkey[pubkey]
+		if !ok {
+			return eth2p0.BLSSignature{}, errors.New("secret not found")
+		}
+
+		sig, err := tbls.Sign(secret, msg)
+		if err != nil {
+			return eth2p0.BLSSignature{}, err
+		}
+
+		return tblsconv.SigToETH2(sig), nil
+	}, nil
 }
 
 // versionJSON extracts the version from a response.

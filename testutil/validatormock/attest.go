@@ -17,6 +17,8 @@ package validatormock
 
 import (
 	"context"
+	"github.com/obolnetwork/charon/core"
+	"time"
 
 	eth2v1 "github.com/attestantio/go-eth2-client/api/v1"
 	eth2p0 "github.com/attestantio/go-eth2-client/spec/phase0"
@@ -280,23 +282,29 @@ func attest(ctx context.Context, eth2Cl eth2wrap.Client, signFunc SignFunc, slot
 		atts  []*eth2p0.Attestation
 		datas attDatas
 	)
-	for commIdx, duties := range dutyByComm {
+	for commIdx := range dutyByComm {
 		data, err := eth2Cl.AttestationData(ctx, slot, commIdx)
 		if err != nil {
 			return nil, err
 		}
 		datas = append(datas, data)
+	}
 
+	t0 := time.Now()
+	for _, data := range datas {
+		duties := dutyByComm[data.Index]
 		root, err := data.HashTreeRoot()
 		if err != nil {
 			return nil, errors.Wrap(err, "hash attestation")
 		}
 
+		t1 := time.Now()
 		sigData, err := signing.GetDataRoot(ctx, eth2Cl, signing.DomainBeaconAttester, data.Target.Epoch, root)
 		if err != nil {
 			return nil, err
 		}
 
+		log.Debug(ctx, "time it took get sigData", z.Any("delay", time.Since(t1)), z.Str("duty", core.NewAttesterDuty(int64(slot)).String()))
 		for _, duty := range duties {
 			sig, err := signFunc(duty.PubKey, sigData[:])
 			if err != nil {
@@ -313,10 +321,13 @@ func attest(ctx context.Context, eth2Cl eth2wrap.Client, signFunc SignFunc, slot
 		}
 	}
 
+	log.Debug(ctx, "Submit attestations to beacon node", z.Any("delay", time.Since(t0)), z.Str("duty", core.NewAttesterDuty(int64(slot)).String()), z.Int("atts", len(atts)))
 	err := eth2Cl.SubmitAttestations(ctx, atts)
 	if err != nil {
 		return nil, err
 	}
+
+	log.Debug(ctx, "Attestations submitted to beacon node", z.Any("delay", time.Since(t0)), z.Str("duty", core.NewAttesterDuty(int64(slot)).String()), z.Int("atts", len(atts)))
 
 	return datas, nil
 }

@@ -243,6 +243,7 @@ func (c Component) AttestationData(parent context.Context, slot eth2p0.Slot, com
 
 // SubmitAttestations implements the eth2client.AttestationsSubmitter for the router.
 func (c Component) SubmitAttestations(ctx context.Context, attestations []*eth2p0.Attestation) error {
+	log.Debug(ctx, "received submit attestations request from VC", z.Int("attestations", len(attestations)))
 	duty := core.NewAttesterDuty(int64(attestations[0].Data.Slot))
 	if len(attestations) > 0 {
 		// Pick the first attestation slot to use as trace root.
@@ -251,6 +252,7 @@ func (c Component) SubmitAttestations(ctx context.Context, attestations []*eth2p
 		defer span.End()
 	}
 
+	t0 := time.Now()
 	setsBySlot := make(map[int64]core.ParSignedDataSet)
 	for _, att := range attestations {
 		slot := int64(att.Data.Slot)
@@ -270,10 +272,13 @@ func (c Component) SubmitAttestations(ctx context.Context, attestations []*eth2p
 		parSigData := core.NewPartialAttestation(att, c.shareIdx)
 
 		// Verify attestation signature
+		t3 := time.Now()
 		err = c.verifyPartialSig(ctx, parSigData, pubkey)
 		if err != nil {
 			return err
 		}
+
+		log.Debug(ctx, "time it toook to verify partial signature", z.Any("delay", time.Since(t3)), z.Str("duty", duty.String()))
 
 		// Encode partial signed data and add to a set
 		set, ok := setsBySlot[slot]
@@ -285,6 +290,8 @@ func (c Component) SubmitAttestations(ctx context.Context, attestations []*eth2p
 		set[pubkey] = parSigData
 	}
 
+	log.Debug(ctx, "processing complete submit attestations", z.Any("delay", time.Since(t0)), z.Str("duty", duty.String()), z.Int("atts", len(attestations)))
+	t1 := time.Now()
 	// Send sets to subscriptions.
 	for slot, set := range setsBySlot {
 		duty := core.NewAttesterDuty(slot)
@@ -298,6 +305,7 @@ func (c Component) SubmitAttestations(ctx context.Context, attestations []*eth2p
 			}
 		}
 	}
+	log.Debug(ctx, "bcast tak gya submit attestations", z.Any("delay", time.Since(t1)), z.Str("duty", duty.String()), z.Int("slots", len(setsBySlot)))
 
 	return nil
 }

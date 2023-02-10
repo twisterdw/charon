@@ -17,6 +17,9 @@ package signing
 
 import (
 	"context"
+	"github.com/obolnetwork/charon/app/log"
+	"github.com/obolnetwork/charon/app/z"
+	"time"
 
 	"github.com/attestantio/go-eth2-client/spec/altair"
 	eth2p0 "github.com/attestantio/go-eth2-client/spec/phase0"
@@ -128,6 +131,7 @@ func Verify(ctx context.Context, eth2Cl eth2wrap.Client, domain DomainName, epoc
 		return err
 	}
 
+	t0 := time.Now()
 	var zeroSig eth2p0.BLSSignature
 	if signature == zeroSig {
 		return errors.New("no signature found")
@@ -146,6 +150,7 @@ func Verify(ctx context.Context, eth2Cl eth2wrap.Client, domain DomainName, epoc
 	} else if !ok {
 		return errors.New("invalid signature")
 	}
+	log.Debug(ctx, "Time taken to verify signature excluding data root", z.Any("delay", time.Since(t0)))
 
 	return nil
 }

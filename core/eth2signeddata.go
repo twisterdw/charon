@@ -17,7 +17,6 @@ package core
 
 import (
 	"context"
-
 	eth2p0 "github.com/attestantio/go-eth2-client/spec/phase0"
 	"github.com/coinbase/kryptology/pkg/signatures/bls/bls_sig"
 

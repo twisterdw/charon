@@ -219,11 +219,14 @@ func TestSubmitAttestations_Verify(t *testing.T) {
 	// Configure beacon mock to call validator API for submissions
 	bmock.SubmitAttestationsFunc = vapi.SubmitAttestations
 
+	signer, err := validatormock.NewSigner(secret)
+	require.NoError(t, err)
+
 	// Run attestation using validator mock
 	attester := validatormock.NewSlotAttester(
 		bmock,
 		eth2p0.Slot(epochSlot),
-		validatormock.NewSigner(secret),
+		signer,
 		[]eth2p0.BLSPubKey{validator.Validator.PublicKey},
 	)
 
@@ -286,7 +289,9 @@ func TestSignAndVerify(t *testing.T) {
 	require.NoError(t, err)
 
 	// Sign
-	sig, err := validatormock.NewSigner(secretKey)(eth2Pubkey, sigDataBytes[:])
+	signer, err := validatormock.NewSigner(secretKey)
+	require.NoError(t, err)
+	sig, err := signer(eth2Pubkey, sigDataBytes[:])
 	require.NoError(t, err)
 
 	// Assert signature

@@ -136,6 +136,7 @@ func newNewCmd() *cobra.Command {
 	numVals := cmd.Flags().Int("num-validators", conf.NumValidators, "Number of distributed validators.")
 	vcTypes := cmd.Flags().StringSlice("validator-types", conf.VCStrings(), "Validator types to include.")
 	nodes := cmd.Flags().Int("nodes", conf.NumNodes, "Number of charon nodes in the cluster.")
+	insecureKeys := cmd.Flags().Bool("insecure-keys", conf.InsecureKeys, "To generate keys quickly.")
 
 	cmd.RunE = func(cmd *cobra.Command, _ []string) error {
 		conf.KeyGen = compose.KeyGen(*keygen)
@@ -147,6 +148,7 @@ func newNewCmd() *cobra.Command {
 		conf.NumValidators = *numVals
 		conf.NumNodes = *nodes
 		conf.Threshold = cluster.Threshold(conf.NumNodes)
+		conf.InsecureKeys = *insecureKeys
 
 		if conf.BuildLocal {
 			conf.ImageTag = "local"
