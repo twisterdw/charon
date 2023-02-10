@@ -651,7 +651,6 @@ func (m multi) ProposerDuties(ctx context.Context, epoch phase0.Epoch, validator
 // Note this endpoint is cached in go-eth2-client.
 func (m multi) Spec(ctx context.Context) (map[string]interface{}, error) {
 	const label = "spec"
-	defer latency(label)()
 
 	res0, err := provide(ctx, m.clients,
 		func(ctx context.Context, cl Client) (map[string]interface{}, error) {
@@ -737,7 +736,6 @@ func (m multi) SubmitVoluntaryExit(ctx context.Context, voluntaryExit *phase0.Si
 // Note this endpoint is cached in go-eth2-client.
 func (m multi) Domain(ctx context.Context, domainType phase0.DomainType, epoch phase0.Epoch) (phase0.Domain, error) {
 	const label = "domain"
-	defer latency(label)()
 
 	res0, err := provide(ctx, m.clients,
 		func(ctx context.Context, cl Client) (phase0.Domain, error) {

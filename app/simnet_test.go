@@ -314,7 +314,7 @@ func testSimnet(t *testing.T, args simnetArgs, expect simnetExpect) {
 					}
 				},
 				SimnetBMockOpts: append([]beaconmock.Option{
-					beaconmock.WithSlotsPerEpoch(1),
+					beaconmock.WithSlotsPerEpoch(1), beaconmock.WithSlotDuration(time.Second * 1),
 				}, args.BMockOpts...),
 				BuilderRegistration: registrationFunc(),
 			},

@@ -24,7 +24,7 @@ const (
 	defaultNumVals    = 1
 	defaultNumNodes   = 4
 	defaultThreshold  = 3
-	defaultFeatureSet = "stable"
+	defaultFeatureSet = "alpha"
 
 	charonImage      = "obolnetwork/charon"
 	containerBinary  = "/usr/local/bin/charon"

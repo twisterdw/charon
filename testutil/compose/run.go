@@ -45,12 +45,12 @@ func Run(ctx context.Context, dir string, conf Config) (TmplData, error) {
 		vcs = append(vcs, vc)
 
 		n := TmplNode{EnvVars: newNodeEnvs(i, conf, typ)}
-		// if !conf.DisableMonitoringPorts {
-		//	for _, p := range charonPorts {
-		//		p.External += i
-		//		n.Ports = append(n.Ports, p)
-		//	}
-		//}
+		if !conf.DisableMonitoringPorts {
+			for _, p := range charonPorts {
+				p.External += 10000 * i
+				n.Ports = append(n.Ports, p)
+			}
+		}
 		nodes = append(nodes, n)
 	}
 
