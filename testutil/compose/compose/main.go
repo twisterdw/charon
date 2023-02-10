@@ -25,7 +25,6 @@ package main
 
 import (
 	"context"
-	"github.com/obolnetwork/charon/cluster"
 	"os/signal"
 	"syscall"
 
@@ -33,6 +32,7 @@ import (
 	"github.com/spf13/pflag"
 
 	"github.com/obolnetwork/charon/app/log"
+	"github.com/obolnetwork/charon/cluster"
 	"github.com/obolnetwork/charon/testutil/compose"
 )
 

@@ -17,7 +17,6 @@ package validatormock
 
 import (
 	"context"
-	"github.com/obolnetwork/charon/core"
 	"time"
 
 	eth2v1 "github.com/attestantio/go-eth2-client/api/v1"
@@ -28,6 +27,7 @@ import (
 	"github.com/obolnetwork/charon/app/eth2wrap"
 	"github.com/obolnetwork/charon/app/log"
 	"github.com/obolnetwork/charon/app/z"
+	"github.com/obolnetwork/charon/core"
 	"github.com/obolnetwork/charon/eth2util"
 	"github.com/obolnetwork/charon/eth2util/eth2exp"
 	"github.com/obolnetwork/charon/eth2util/signing"

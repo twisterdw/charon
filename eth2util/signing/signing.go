@@ -17,8 +17,6 @@ package signing
 
 import (
 	"context"
-	"github.com/obolnetwork/charon/app/log"
-	"github.com/obolnetwork/charon/app/z"
 	"time"
 
 	"github.com/attestantio/go-eth2-client/spec/altair"
@@ -28,7 +26,9 @@ import (
 
 	"github.com/obolnetwork/charon/app/errors"
 	"github.com/obolnetwork/charon/app/eth2wrap"
+	"github.com/obolnetwork/charon/app/log"
 	"github.com/obolnetwork/charon/app/tracer"
+	"github.com/obolnetwork/charon/app/z"
 	"github.com/obolnetwork/charon/eth2util"
 	"github.com/obolnetwork/charon/tbls"
 )

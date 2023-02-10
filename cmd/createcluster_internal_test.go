@@ -20,9 +20,6 @@ import (
 	"context"
 	"encoding/hex"
 	"encoding/json"
-	"github.com/coinbase/kryptology/pkg/signatures/bls/bls_sig"
-	"github.com/stretchr/testify/require"
-	keystorev4 "github.com/wealdtech/go-eth2-wallet-encryptor-keystorev4"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -31,6 +28,10 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/coinbase/kryptology/pkg/signatures/bls/bls_sig"
+	"github.com/stretchr/testify/require"
+	keystorev4 "github.com/wealdtech/go-eth2-wallet-encryptor-keystorev4"
 
 	"github.com/obolnetwork/charon/app/log"
 	"github.com/obolnetwork/charon/cluster"
