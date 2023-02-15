@@ -39,29 +39,29 @@ charon-ის შესამოწმებლად უმარტივე�
 
 ყოველთვის არის [charon godocs](https://pkg.go.dev/github.com/obolnetwork/charon) სარესურსო კოდების დოკუმენტაციისათვის.
 
-## Supported Consensus Layer Clients
+## მხარდაჭერილი კონსენსუსის ფენის კლიენტები
 
-Charon integrates into the Ethereum consensus stack as a middleware between the validator client
-and the beacon node via the official [Eth Beacon Node REST API](https://ethereum.github.io/beacon-APIs/#/).
-Charon supports any upstream beacon node that serves the Beacon API.
-Charon aims to support any downstream standalone validator client that consumes the Beacon API.
+Charon ინტეგრირდება Ethereum-ის კონსენსუსის სტეკში, როგორც შუალედური პროგრამა ვალიდატორ კლიენტს შორის
+და შუქურა კვანძის მეშვეობით ოფიციალური [Eth Beacon Node REST API](https://ethereum.github.io/beacon-APIs/#/).
+ქარონი მხარს უჭერს ნებისმიერ ზედა დინების შუქურას, რომელიც ემსახურება Beacon API-ს.
+Charon მიზნად ისახავს მხარი დაუჭიროს ნებისმიერ ქვემოთ მოყვანილ დამოუკიდებელ ვალიდატორ კლიენტს Beacon API-ის გამოყენებით.
 
 | Client                                             | Beacon Node | Validator Client | Notes                                   |
 | -------------------------------------------------- | :---------: | :--------------: |-----------------------------------------|
-| [Teku](https://github.com/ConsenSys/teku)          |     ✅      |        ✅        | Fully supported                         |
-| [Lighthouse](https://github.com/sigp/lighthouse)   |     ✅      |        ✅        | Fully supported                         |
-| [Lodestar](https://github.com/ChainSafe/lodestar)  |     ✅      |       \*️⃣        | DVT compatibility issue                 |
-| [Vouch](https://github.com/attestantio/vouch)      |     \*️⃣     |        ✅        | Only validator client provided          |
-| [Prysm](https://github.com/prysmaticlabs/prysm)    |     ✅      |        🛑        | Validator client requires gRPC API      |
-| [Nimbus](https://github.com/status-im/nimbus-eth2) |     ✅      |        ✅        | Soon to be supported |
+| [Teku](https://github.com/ConsenSys/teku)          |     ✅      |        ✅        | სრულად მხარდაჭერი                     |
+| [Lighthouse](https://github.com/sigp/lighthouse)   |     ✅      |        ✅        | სრულად მხარდაჭერილი                  |
+| [Lodestar](https://github.com/ChainSafe/lodestar)  |     ✅      |       \*️⃣        | თავსებადობის პრობლემა DVT-თან          |
+| [Vouch](https://github.com/attestantio/vouch)      |     \*️⃣     |        ✅        | მოწოდებულია მხოლოდ ვალიდატორი კლიენტი|
+| [Prysm](https://github.com/prysmaticlabs/prysm)    |     ✅      |        🛑        | Validator კლიენტი საჭიროებს gRPC API-ს |
+| [Nimbus](https://github.com/status-im/nimbus-eth2) |     ✅      |        ✅        | მალე იქნება მხარდაჭერილი |
 
-## Project Status
+## პროექტის სტატუსი
 
-It is still early days for the Obol Network and things are under active development.
-We are moving fast so check back in regularly to track the progress.
+Obol Network-ისთვის ჯერ ადრეა და ყველაფერი აქტიური განვითარების პროცესშია.
+ჩვენ სწრაფად მივიწევთ წინ, ამიტომ რეგულარულად შეამოწმეთ პროგრესი.
 
-Charon is a distributed validator, so its main responsibility is performing validation duties.
-The following table outlines which clients have produced which duties on a public testnet, and which are still under construction (🚧 )
+ქარონი არის განაწილებადი ვალიდატორი, ამიტომ მისი მთავარი პასუხისმგებლობაა ვალიდაციის მოვალეობების შესრულება.
+შემდეგი ცხრილი ასახავს კლიენტებს, რომელი მოვალეობები შექმნეს საჯარო საცდელ ქსელზე და რომელი ჯერ კიდევ მშენებლობის პროცესშია (🚧 )
 
 | Duty \ Client                        |                      Teku                      |                    Lighthouse                    | Lodestar | Nimbus | Vouch | Prysm |
 |--------------------------------------|:----------------------------------------------:|:------------------------------------------------:|:--------:|:------:|:-----:|:-----:|
