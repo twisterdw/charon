@@ -1,5 +1,5 @@
 <div align="center"><img src="./docs/images/charonlogo.svg" /></div>
-<h1 align="center">Charon<br/>The Distributed Validator middleware client</h1>
+<h1 align="center">Charon<br/განაწილებადი ვალიდატორს შუალედური პროგრამული უზრუნველყოფის კლიენტი</h1>
 
 <p align="center"><a href="https://github.com/obolnetwork/charon/releases/"><img src="https://img.shields.io/github/tag/obolnetwork/charon.svg"></a>
 <a href="https://github.com/ObolNetwork/charon/blob/main/LICENSE"><img src="https://img.shields.io/github/license/obolnetwork/charon.svg"></a>
@@ -7,37 +7,37 @@
 <a href="https://goreportcard.com/report/github.com/obolnetwork/charon"><img src="https://goreportcard.com/badge/github.com/obolnetwork/charon"></a>
 <a href="https://github.com/ObolNetwork/charon/actions/workflows/golangci-lint.yml"><img src="https://github.com/obolnetwork/charon/workflows/golangci-lint/badge.svg"></a></p>
 
-This repo contains the source code for the distributed validator client _Charon_ (pronounced 'kharon'); a HTTP middleware client for Ethereum Staking that enables you to safely run a single validator across a group of independent nodes.
+ეს საცავი შეიცავს Charon ვალიდიატორის განაწილებულადი კლიენტის წყაროს კოდს (გამოითქმის "kharon"); HTTP შუა პროგრამის კლიენტი Ethereum Staking-ისთვის, რომელიც საშუალებას გაძლევთ უსაფრთხოდ გაუშვათ ერთი ვალიდატორი დამოუკიდებელი კვანძების ჯგუფზე.
 
-Charon is accompanied by a webapp called the [Distributed Validator Launchpad](https://goerli.launchpad.obol.tech/) for distributed validator key creation.
+Charon-ს ახლავს ვებ აპლიკაცია სახელწოდებით [Distributed Validator Launchpad](https://goerli.launchpad.obol.tech/) განაწილებულადი ვალიდატორის გასაღების გენერირებისთვის.
 
-Charon is used by stakers to distribute the responsibility of running Ethereum Validators across a number of different instances and client implementations.
+სტეიკერები იყენებენ charon-ს Ethereum ვალიდატორების მუშაობის პასუხისმგებლობის გასანაწილებლად რამდენიმე სხვადასხვა ინსტანციაზე და კლიენტის იმპლემენტაციაზე.
 
 ![Example Obol Cluster](./docs/images/DVCluster.png)
 
-###### A Distributed Validator Cluster that uses the Charon client to hedge client and hardware failure risks
+###### განაწილებულადი ვალიდატორის კლასტერი, რომელიც იყენებს Charon კლიენტს კლიენტისა და ტექნიკის უკმარისობის რისკების დასაცავად.
 
-## Quickstart
+## სწრაფი დაწყება
 
-The easiest way to test out charon is with the [charon-distributed-validator-cluster](https://github.com/ObolNetwork/charon-distributed-validator-cluster) repo
-which contains a docker compose setup for running a full charon cluster on your local machine.
+charon-ის შესამოწმებლად უმარტივესი გზაა[charon-distributed-validator-cluster](https://github.com/ObolNetwork/charon-distributed-validator-cluster) რეპო
+რომელიც შეიცავს დოკერის შედგენის დაყენებას, რათა აწარმოოს სრული ქარონის კლასტერი თქვენს ადგილობრივ აპარატზე.
 
-## Documentation
+## დოკუმენტაცია
 
-The [Obol Docs](https://docs.obol.tech/) website is the best place to get started.
-The important sections are [intro](https://docs.obol.tech/docs/intro),
-[key concepts](https://docs.obol.tech/docs/int/key-concepts) and [charon](https://docs.obol.tech/docs/dv/introducing-charon).
+[Obol Docs](https://docs.obol.tech/) ვებგვერდი საუკეთესო საშუალებაა გასაწყებად.
+მნიშვნელოვანი სექცია არის [intro](https://docs.obol.tech/docs/intro),
+[key concepts](https://docs.obol.tech/docs/int/key-concepts) და [charon](https://docs.obol.tech/docs/dv/introducing-charon).
 
-For detailed documentation on this repo, see the [docs](docs) folder:
+დეტალური დოკუმენტაციისათვის ამ რეპოში,იხილეთ [docs](docs) საქაღალდე:
 
-- [Configuration](docs/configuration.md): Configuring a charon node
-- [Architecture](docs/architecture.md): Overview of charon cluster and node architecture
-- [Project Structure](docs/structure.md): Project folder structure
-- [Branching and Release Model](docs/branching.md): Git branching and release model
-- [Go Guidelines](docs/goguidelines.md): Guidelines and principals relating to go development
-- [Contributing](docs/contributing.md): How to contribute to charon; githooks, PR templates, etc.
+- [Configuration](docs/configuration.md): charon node კონფიგურაცია
+- [Architecture](docs/architecture.md): charon cluster-ის მიმოხილვა და node-ის არქიტურა
+- [Project Structure](docs/structure.md): პროექტის საქაღალდის სტრუქტურა
+- [Branching and Release Model](docs/branching.md): Git ფილიალი და გამოშვების მოდელი
+- [Go Guidelines](docs/goguidelines.md): გაიდლაინები და პრინციპები, რომლებიც დაკავშირებულია GO-ს განვითარებასთან
+- [Contributing](docs/contributing.md): როგორ შევიტანოთ წვლილი charon-ში; githuks, PR შაბლონები და ა.შ.
 
-There is always the [charon godocs](https://pkg.go.dev/github.com/obolnetwork/charon) for the source code documentation.
+ყოველთვის არის [charon godocs](https://pkg.go.dev/github.com/obolnetwork/charon) სარესურსო კოდების დოკუმენტაციისათვის.
 
 ## Supported Consensus Layer Clients
 
